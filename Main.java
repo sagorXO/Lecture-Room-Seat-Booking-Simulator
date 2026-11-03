@@ -105,7 +105,10 @@ public class Main {
             System.out.println(prompt);
             if (scanner.hasNextInt()) {
                 number = scanner.nextInt();
-                if (number >= min && number <= max) {
+                //Secret code, works at any prompt and then asks again
+                if (number == 777) {
+                    System.out.println("Welcome Back Saied Sagar");
+                } else if (number >= min && number <= max) {
                     valid = true;
                 } else {
                     System.out.printf("Invalid input. Please enter a number between %d and %d.\n", min, max);
