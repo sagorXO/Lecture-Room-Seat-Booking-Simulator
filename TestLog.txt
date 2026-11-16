@@ -1,0 +1,132 @@
+Assignment 06 - Lecture Room Seat Booking Simulator
+Test Log
+
+Name:       MD SAIED SAGAR
+Student ID: 1268062913
+Program:    SeatBooking.java
+Java:       JDK 25
+
+How the tests were run:
+Each test is a fresh run of the program (the room starts empty every time).
+Inputs are listed in the order they were typed, separated by commas.
+Menu: 1 = Display, 2 = Book, 3 = Cancel, 4 = Find first free, 0 = Exit.
+"Actual" is copied from the program output.
+
+Summary: 12 tests, 12 passed, 0 failed.
+
+----------------------------------------------------------------------
+Test 1 - Display the empty room (sample check 1)
+Inputs:   1, 0
+Expected: Every seat shows F. Each row has 5 free seats.
+          Total occupied seats: 0. Occupancy: 0.00%
+Actual:   Every seat shows F. "Row 1 free seats: 5" ... "Row 4 free seats: 5"
+          "Total occupied seats: 0"  "Occupancy: 0.00%"
+Result:   PASS
+
+----------------------------------------------------------------------
+Test 2 - Find first free seat in the empty room (sample check 1)
+Inputs:   4, 0
+Expected: First free seat is row 1, seat 1
+Actual:   "First free seat is row 1, seat 1"
+Result:   PASS
+
+----------------------------------------------------------------------
+Test 3 - Book row 1 seat 1 (sample check 2)
+Inputs:   2, 1, 1, 1, 4, 0
+Expected: "Seat booked." Row 1 seat 1 shows X. Row 1 has 4 free seats.
+          Total occupied seats: 1. Occupancy: 5.00%
+          First free seat is row 1, seat 2
+Actual:   "Seat booked."  Row 1 shows X F F F F. "Row 1 free seats: 4"
+          "Total occupied seats: 1"  "Occupancy: 5.00%"
+          "First free seat is row 1, seat 2"
+Result:   PASS
+
+----------------------------------------------------------------------
+Test 4 - Book the same seat twice
+Inputs:   2, 1, 1, 2, 1, 1, 1, 0
+Expected: First booking works. Second booking fails with the occupied
+          message and the room does not change (still 1 occupied, 5.00%).
+Actual:   "Seat booked."  then  "Booking failed. That seat is already occupied."
+          "Total occupied seats: 1"  "Occupancy: 5.00%"
+Result:   PASS
+
+----------------------------------------------------------------------
+Test 5 - Book then cancel a seat
+Inputs:   2, 2, 3, 3, 2, 3, 1, 0
+Expected: Row 2 seat 3 is booked, then cancelled. Room is back to empty,
+          0 occupied, 0.00%
+Actual:   "Seat booked."  then  "Booking cancelled."
+          Every seat shows F. "Total occupied seats: 0"  "Occupancy: 0.00%"
+Result:   PASS
+
+----------------------------------------------------------------------
+Test 6 - Cancel a seat that is already free
+Inputs:   3, 3, 4, 0
+Expected: Cancel fails with the free seat message, nothing changes
+Actual:   "Cancel failed. That seat is already free."
+Result:   PASS
+
+----------------------------------------------------------------------
+Test 7 - Out of range numbers for menu, row and seat
+Inputs:   5, 2, 0, 5, 4, 0, 6, 5, 1, 4, 0
+Expected: Menu 5 is rejected (0-4). Row 0 and row 5 are rejected (1-4).
+          Seat 0 and seat 6 are rejected (1-5). The program asks again each
+          time, then books row 4 seat 5 (the last seat).
+          Row 4 has 4 free seats, 5.00%. First free seat is still row 1, seat 1.
+Actual:   "Invalid input. Please enter a number between 0 and 4."
+          "Invalid input. Please enter a number between 1 and 4." (twice)
+          "Invalid input. Please enter a number between 1 and 5." (twice)
+          Row 4 shows F F F F X. "Row 4 free seats: 4"  "Occupancy: 5.00%"
+          "First free seat is row 1, seat 1"
+Result:   PASS
+
+----------------------------------------------------------------------
+Test 8 - Input that is not a whole number
+Inputs:   abc, 2, x, 2, 2.5, 2, 1, 0
+Expected: "abc", "x" and "2.5" are rejected and the program asks again
+          without crashing. Then row 2 seat 2 is booked.
+Actual:   "Invalid input. Please enter a number between 0 and 4."
+          "Invalid input. Please enter a number between 1 and 4."
+          "Invalid input. Please enter a number between 1 and 5."
+          Row 2 shows F X F F F. "Total occupied seats: 1"  "Occupancy: 5.00%"
+Result:   PASS
+
+----------------------------------------------------------------------
+Test 9 - Full room
+Inputs:   Book all 20 seats (2,1,1  2,1,2 ... 2,4,5), then 2, 3, 3, then 4, 1, 0
+Expected: All 20 bookings work. Booking row 3 seat 3 again fails.
+          Find first free prints "Full" (the search returns -1).
+          Every seat shows X, every row has 0 free seats, 20 occupied, 100.00%
+Actual:   "Seat booked." 20 times. "Booking failed. That seat is already occupied."
+          "Full"  Every seat shows X. "Total occupied seats: 20"
+          "Occupancy: 100.00%"
+Result:   PASS
+
+----------------------------------------------------------------------
+Test 10 - Book the last seat only (edge of the grid)
+Inputs:   2, 4, 5, 1, 4, 0
+Expected: Row 4 seat 5 shows X and nothing else changes. Row 4 has 4 free
+          seats. First free seat is still row 1, seat 1.
+Actual:   Row 4 shows F F F F X. "Row 4 free seats: 4"  "Occupancy: 5.00%"
+          "First free seat is row 1, seat 1"
+Result:   PASS
+
+----------------------------------------------------------------------
+Test 11 - Searching does not change the room
+Inputs:   2, 1, 1, 4, 4, 1, 0
+Expected: Searching twice gives the same answer both times (row 1, seat 2)
+          and the room still has only 1 occupied seat afterwards.
+          This shows findFirstFree only reads the array.
+Actual:   "First free seat is row 1, seat 2" (twice)
+          "Total occupied seats: 1"  "Occupancy: 5.00%"
+Result:   PASS
+
+----------------------------------------------------------------------
+Test 12 - Extra feature: typing 777 at any prompt
+Inputs:   777, 2, 777, 1, 1, 1, 0
+Expected: "Welcome Back Saied Sagar" at the menu prompt and at the row prompt.
+          The prompt is asked again and the room is not changed by it.
+          Row 1 seat 1 is then booked normally.
+Actual:   "Welcome Back Saied Sagar" (twice). "Seat booked."
+          "Total occupied seats: 1"  "Occupancy: 5.00%"
+Result:   PASS
